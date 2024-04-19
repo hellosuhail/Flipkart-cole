@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Anton&family=Lato:wght@100;300&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+
+        }
+
+        h1 {
+            background-color: rgb(4, 41, 94);
+            justify-content: center;
+            text-align: center;
+            color: white;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .conten {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            display: flex;
+            gap: 25px;
+        }
+
+        img {
+            height: 106px;
+            width: 109px;
+            border-radius: 50px;
+        }
+
+        img:hover {
+            cursor: pointer;
+            opacity: 0.5;
+        }
+
+        .sc {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            font-size: 40px;
+            text-align: center;
+        }
+
+        #result {
+            font-family: 'Lato', sans-serif;
+            background-color: black;
+            color: white;
+            border-radius: 2rem;
+            width: 8rem;
+            margin-left: 44%;
+            margin-top: 40px;
+            padding: 1rem;
+
+        }
+
+        #result p {
+            text-align: center;
+
+        }
+
+        #btn {
+            background-color: black;
+            color: white;
+            width: 100px;
+            height: 30px;
+            border-radius: 19px;
+        }
+
+        #btn:hover {
+            background-color: rgb(55, 52, 52);
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Rock Paper Scissor</h1>
+
+    <div class="conten">
+        <div class="choice" id="rock">
+            <img src="ston.jpg" alt="">
+        </div>
+        <div class="choice" id="paper">
+            <img src="paper.jpg" alt="">
+        </div>
+        <div class="choice" id="sicssor">
+            <img src="sizor.jpg" alt="">
+        </div>
+    </div>
+
+    <div class="sc">
+        <div id="scor">
+            <p id="userScor">0</p>
+            <p>YOU</p>
+        </div>
+
+
+        <div id="scorC">
+            <p id="computerScor">0</p>
+            <p>COMPUTER</p>
+        </div>
+    </div>
+
+    <div>
+        <p id="result">Result</p>
+    </div>
+
+    <textarea name="choice" id="choice" cols="30" rows="10"></textarea>
+    <div class="div"><button id="btn">Restart</button></div>
+
+</body>
+<script>
+    let scor = 0;
+    let scorComputer = 0;
+    let user = document.querySelector('#userScor');
+    let computer = document.querySelector('#computerScor');
+    let userChoice = document.querySelectorAll('.choice');
+    let result = document.querySelector('#result');
+    let choice = document.querySelector('#choice');
+    let reset = document.querySelector('#btn');
+
+    const rset = () => {
+        let string = '';
+        result.textContent = 'Result';
+        result.style.backgroundColor = 'black';
+        user.textContent = '0';
+        computer.textContent = '0';
+        choice.textContent = string;
+    }
+    reset.addEventListener('click', () => {
+        rset();
+    })
+    choice.style.backgroundColor = ' rgb(4, 41, 94)';
+    choice.style.color = 'white';
+
+
+    const compChoice = () => {
+        let arr = ['rock', 'paper', 'sicssor'];
+        const com = Math.floor(Math.random() * 3);
+        return arr[com];
+    }
+
+    const winPoint = () => {
+        scor++
+        user.textContent = scor;
+    }
+
+    const winScor = () => {
+        scorComputer++
+        computer.textContent = scorComputer;
+    }
+
+
+    const onclick = (cide) => {
+        console.log('user choice is ' + cide);
+        let copu = compChoice();
+        console.log('computer choice is ' + copu);
+
+        choice.style.backgroundColor = ' rgb(4, 41, 94)';
+        choice.style.color = 'white';
+        choice.textContent = 'your choice is ' + cide + 'computer choice is ' + copu;
+        if (cide === copu) {
+            result.textContent = 'drow';
+            result.style.backgroundColor = 'orange';
+            // console.log('drow')
+
+        }
+        else if (cide === 'rock') {
+            if (copu === 'paper') {
+                // console.log('you lose ');
+                result.textContent = 'you lose';
+                result.style.backgroundColor = 'red';
+                winScor();
+
+            }
+            else {
+                // console.log('you win')
+                winPoint();
+                result.textContent = 'you win';
+                result.style.backgroundColor = 'green';
+            }
+        }
+        else if (cide === 'paper') {
+
+            if (copu === 'sicssor') {
+                winScor();
+                result.textContent = 'you lose';
+                result.style.backgroundColor = 'red';
+            }
+            else {
+                winPoint();
+                result.textContent = 'you win';
+                result.style.backgroundColor = 'green';
+            }
+        }
+        else if (cide === 'sicssor') {
+
+
+            if (copu === 'rock') {
+                winScor();
+                result.textContent = 'you lose';
+                result.style.backgroundColor = 'red';
+            }
+            else {
+                winPoint();
+                result.textContent = 'you win';
+                result.style.backgroundColor = 'green';
+            }
+        }
+
+
+
+    }
+
+    userChoice.forEach(choice => {
+        choice.addEventListener('click', () => {
+            const cid = choice.getAttribute('id');
+            onclick(cid);
+        })
+
+    });
+
+</script>
+
+</html>
